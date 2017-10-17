@@ -52,7 +52,7 @@
  ****************************************************************************/
 
 /* The S5JT200 has FLASH beginning at address 0x0400:0000 and
- * SRAM beginning at address 0x0202:0000. SRAM 0x02020000 mapped to 0xFFFF:0000 
+ * SRAM beginning at address 0x0202:0000. SRAM 0x02020000 mapped to 0xFFFF:0000
  * for Vector handling. The bootloader change program counter to flash _stext area
  * but it checks program header before jump.
  */
@@ -61,12 +61,12 @@ MEMORY
 {
     FLASH   (rx)    : ORIGIN = 0x18001000, LENGTH = 500K
     IRAM (rwx)      : ORIGIN = 0x00100080, LENGTH = (128K - 0x80)
-    DRAM (rwx)      : ORIGIN = 0x00180000, LENGTH = 96K 
+    DRAM (rwx)      : ORIGIN = 0x00180000, LENGTH = 96K
 }
 
 OUTPUT_FORMAT("elf32-littlearm", "elf32-littlearm", "elf32-littlearm")
 OUTPUT_ARCH(arm)
-ENTRY(Reset_Handler)
+ENTRY(__start)
 SECTIONS
 {
     .text : {
@@ -107,10 +107,10 @@ SECTIONS
 		_sdata = ABSOLUTE(.);
 		. = ALIGN(4);
         *(.data .data.*)
-		
+
          . = ALIGN(4);
         *(.gnu.linkonce.d.*)
-		
+
          . = ALIGN(4);
         CONSTRUCTORS
 		_edata = ABSOLUTE(.);
@@ -124,7 +124,7 @@ SECTIONS
 		. = ALIGN(4);
 		_ebss = ABSOLUTE(.);
 	} > IRAM
-    
+
 
 	/* Stabs debugging sections. */
 	.stab 0 : { *(.stab) }
